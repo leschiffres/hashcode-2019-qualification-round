@@ -1,6 +1,6 @@
 from parse import parse_file
 from submit import compute_score, output_results
-from implementation import random_permutation_algorithm, greedy_search
+from implementation import random_permutation_algorithm, greedy_search, simulated_annealing
 import random
 
 def split_photos(photo_type):
@@ -59,9 +59,8 @@ for f in input_filenames:
     print("Total number of slides : %d" %(total_slides))
     
     # slides = random_permutation_algorithm(slides)
-    # slides = simulating_annealing(slides)
-
     slides = greedy_search(slides, K=1000)
+    # slides = simulated_annealing(slides)
 
     print("Total Score : %d" %(compute_score(slides)))
 
