@@ -1,8 +1,7 @@
 from parse import parse_file
 from submit import compute_score, output_results
-from implementation import random_permutation_algorithm
+from implementation import random_permutation_algorithm, greedy_search
 import random
-input_filenames = ["a_example", "b_lovely_landscapes", "c_memorable_moments", "d_pet_pictures", "e_shiny_selfies"]
 
 def split_photos(photo_type):
     vertical, horizontal = ([] for _ in range(2))
@@ -25,8 +24,8 @@ def build_vertical_slides(vertical_photos):
 
     return vertical_pairs
 
-
-# input_filenames = [input_filenames[0]]
+input_filenames = ["a_example", "b_lovely_landscapes", "c_memorable_moments", "d_pet_pictures", "e_shiny_selfies"]
+input_filenames = ["d_pet_pictures"]
 for f in input_filenames:
     print("-"*100)
     print("Filename:",f+'.txt')
@@ -35,7 +34,6 @@ for f in input_filenames:
     total_photos, photo_type, total_tags, tags_list = parse_file(filename)
     vertical, horizontal = split_photos(photo_type)
     print('Vertical: {0} , Horizontal: {1}' .format(len(vertical), len(horizontal)))
-    # print('Vertical: %d , Horizontal: %d' %(len(vertical), len(horizontal)))
     
     # Single vertical photos are not alowed in a file. They have to be organised pairwise in a slide.
     # The following function places vertical photos into pairs completely at random.
@@ -60,8 +58,10 @@ for f in input_filenames:
     total_slides = len(slides)
     print("Total number of slides : %d" %(total_slides))
     
-    slides = random_permutation_algorithm(slides)
+    # slides = random_permutation_algorithm(slides)
     # slides = simulating_annealing(slides)
+
+    slides = greedy_search(slides, K=1000)
 
     print("Total Score : %d" %(compute_score(slides)))
 
